@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="myMod">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>自定义指令</title>
+    <link rel="stylesheet" href="../../public/lib/bootstrap/dist/css/bootstrap.css"/>
+</head>
+<body ng-controller="myCtrl">
+父ctrl: <br/>
+{{zhangsan}}<br/>
+{{lisi}}<br/>
+<input type="text" ng-model="zhangsan"/><br/>
+<input type="text" ng-model="lisi"/><br/>
+指令: <br/>
+<person namexx="zhangsan"></person>
+<person namexx="lisi"></person>
+<!--这里注意，就不用表达式{{}}，而是直接暴露出来字段名，意味着双向绑定之义。-->
+</body>
+</html>
+<script src="../../public/lib/angular/angular.js"></script>
+<script>
+    /*
+     scope的绑定策略
+     =：与父scope中的属性进行双向绑定。
+
+     * */
+    var module = angular.module('myMod',[]);
+    //指令影响到父ctrl,而且父ctrl也会影响到指令。
+    module.controller('myCtrl',function($scope){
+        $scope.zhangsan='张三';
+        $scope.lisi='李四';
+        $scope.greet = function(name,word){
+            alert(name+" "+word);
+        }
+    })
+            .directive('person',function(){
+                return {
+                    transclude:true,
+                    scope:{
+                        name:'=namexx'
+                    },//表明：这里有一个独立scope属性，取值从name属性上取。
+                    replace:true,
+                    restrict:'E',
+                    template:'<div>姓名：{{name}}<input ng-model="name" type="text"/></div>'//这里的scope.name，就是上面的值。
+
+                };
+            });
+</script>

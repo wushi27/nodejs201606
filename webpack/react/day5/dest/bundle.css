@@ -1,0 +1,20 @@
+.comment-box {
+  color: red;
+  background-color: green;
+  padding: 10px;
+  border-radius: 10px;
+  width: 500px;
+  height: 300px;
+}
+.comment-list {
+  background-color: yellow;
+  padding: 10px;
+  width: 200px;
+  height: 300px;
+}
+.comment-form {
+  background-color: blue;
+  padding: 10px;
+  width: 200px;
+  height: 300px;
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html ng-app="myMod">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>ui-router</title>
+
+
+</head>
+<body>
+
+    <a ui-sref="index">index</a><br/>
+    <a ui-sref="user">user</a>
+    <div ng-controller="myCtrl">
+        <button ng-click="gotoUser()">跳到用户页面</button>
+    </div>
+
+    <div ui-view>
+            切换区域
+    </div>
+
+</body>
+</html>
+<script src="../../public/lib/angular/angular.js"></script>
+<script src="../../public/lib/angular-ui-router/release/angular-ui-router.js"></script>
+<script>
+    /*
+        控制权限：
+        给$state对象提供配置，指定必须登录才能访问的状态。
+        监听路由事件：
+        $stateNotFound:当状态无法找到时发生。
+        $stateChangeStart:切换状态前
+        $stateChangeSuccess:切换状态后
+        $stateChangeError:当模板解析过程中发生错误时触发，
+        进入退出回调
+
+     * */
+    //注入依赖
+        var module = angular.module('myMod',['ui.router']);
+        module.controller('myCtrl',function($scope,$state){
+            $scope.gotoUser = function(){
+                $state.go('user');
+            };
+        });
+        module.config(function($stateProvider,$urlRouterProvider){
+            $urlRouterProvider.otherwise('/user');//当不存在的url时，到这里。
+            $stateProvider.state('index',{
+                url:'/index',
+                need_login:true,
+                templateUrl:'index.html'
+            }).state('login',{
+                url:'/login',
+                templateUrl:'login.html'
+            }).state('user',{
+                url:'/user',
+                need_login:true,
+                templateUrl:'user.html'
+            }).state('list',{
+                url:'/list',
+                templateUrl:'list.html',
+                resolve:{
+                    books:function($q){
+                        //耗时操作
+                        var defer = $q.defer();
+                        setTimeout(function(){
+                            //console.log(data);
+                            defer.resolve([{"name":"nodejs"},{"name":"java"}]);
+                        },2000);
+                        return defer.promise;
+
+                    }
+                },
+                controller:function($scope,books){
+                    //对于setTimeout这样的异步操作，应该用解决器。
+                    //books是一个解决器服务，会等待延时载入。
+                    $scope.books = books;
+                }
+            });
+        });
+        module.run(function($rootScope,$state){
+            $rootScope.$on('$stateChangeStart',function(event,toState,toParams,fromState,fromParams){
+                if(toState.need_login){
+                    if(!$rootScope.username){//没有username
+                        alert('你还没有登录');
+                        $state.go('login');
+                        event.preventDefault();//阻止默认切换事件发生。
+                    }
+                }
+            });
+        });
+</script>

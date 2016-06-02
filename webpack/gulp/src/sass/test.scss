@@ -1,0 +1,23 @@
+$blue:#1875e7;
+$var:100;
+$side:left;
+　　body {
+  　　　　margin:(14px/2);
+  　　　　top:50px + 100px;
+  　　　　right:$var * 10%;
+    }
+
+　　div {
+  　　　color:$blue;
+      }
+
+　　.rounded {
+  　　　　border-#{$side}-radius:5px;
+ }
+
+
+　　.div1 {
+  　　　　h1 {
+    　　　　　　color:red;
+            }
+    }

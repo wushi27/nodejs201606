@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myMod">
+<head>
+    <meta charset="UTF-8">
+    <title>MVVM</title>
+</head>
+<body>
+    <div ng-controller="myCtrl">
+        {{name}}
+    </div>
+</body>
+</html>
+<script src="../public/lib/angular/angular.js"></script>
+<script>
+    //控制器名字
+    angular.module('myMod',[])
+            .controller('myCtrl',function($scope){
+                //控制器定义
+                $scope.name = 'zhangsan';
+            });
+</script>

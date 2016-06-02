@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="myMod">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>$http拦截器</title>
+    <link rel="stylesheet" href="../../public/lib/bootstrap/dist/css/bootstrap.css"/>
+
+</head>
+<body>
+    <div ng-controller="myCtrl">
+        <ul>
+            <li ng-repeat="book in books">{{book.name}}</li>
+        </ul>
+    </div>
+</body>
+</html>
+<script src="../../public/lib/angular/angular.js"></script>
+<script>
+/*
+    $httpProvider中有一个interceptors数组，
+    所谓拦截器只是一个简单的注册到了该数组中的常规服务工厂函数。
+    拦截器的功能：
+    1.通过request方法拦截请求：该方法发送请求到后台之前执行，因为可以修改配置或做其他操作。
+    2.通过response方法拦截响应，该方法在接收到请求响应后执行，可以修改响应的操作。
+    3.通过实现requestError方法拦截请求异常：有时候一个请求发送失败或者被拦截器拒绝了。
+    4.通过responseError方法拦截响应异常：有时候我们后台调用失败了。如404,500等的处理，如果不拦截，就要在每个http请求都要写。
+*
+* */
+    var module = angular.module('myMod',[]);
+    //定义一个拦截器，并加入到相关数组中，依次调用。
+    module.factory('bookInterceptor',function($log){//注入log
+        //工厂方法
+        return {
+            request:function(config){//config:装的所有请求头信息
+                $log.log('request:',config);
+                config.url = 'student.json';//拦截后，修改了url指向。
+                return config;
+            },
+            response:function(result){
+                $log.log('response');
+                return result;
+
+            },
+//-----------以上两个方法不能随便写----------------------
+            requestError:function(){
+                $log.log('request error');
+            },
+            responseError:function(){
+                $log.log('response error');
+            }
+        };
+    });
+    module.config(function($httpProvider){
+
+        $httpProvider.interceptors.push('bookInterceptor');
+    });
+    module.controller('myCtrl',function($scope,$http){
+        //内部调用的就是jquery
+        $http.get('./book.json').success(function(data,status,headers,config){
+                $scope.books = data;
+        }).error(function(){
+            console.log(arguments);
+        });
+    });
+
+</script>

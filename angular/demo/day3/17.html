@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html ng-app="myMod">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>自定义指令111</title>
+    <link rel="stylesheet" href="../../public/lib/bootstrap/dist/css/bootstrap.css"/>
+    <style>
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="jumbotron text-center">
+
+        <girl beautiful gender></girl>
+
+    </div>
+</div>
+
+
+</body>
+</html>
+<script src="../../public/lib/angular/angular.js"></script>
+<script>
+//指令之间的交互。
+    var module = angular.module('myMod',[]);
+
+//定义一个组件指令
+    module.directive('girl',function(){
+        return {
+            restrict:'E',
+            scope:true,//独立作用域
+            controller:function($scope,$element,$attrs){
+                //控制当前的指令
+                var desc=[];//分享到其他指令中
+                this.add = function(chars){
+                    desc.push(chars);
+                }//分享给其他指令调用。
+                $scope.dc = desc;//将desc封装为私有变量，外部无法访问。
+
+            },
+            template:'<h1>Annie {{dc}}</h1>'
+        };
+    });
+//两个修饰指令，可以从父指令中拿信息。
+module.directive('beautiful',function(){
+    return {
+        restrict:'A',
+        require:'girl',//需要依赖的指令,则会往link中注入ctrl
+        link:function(scope,ele,attrs,girlCtrl){
+            girlCtrl.add('beautiful');
+
+            //scope.desc.push('aaa');//无法访问desc
+        }
+    };
+});
+module.directive('gender',function(){
+    return {
+        restrict:'A',
+        require:'girl',//需要依赖的指令,则会往link中注入ctrl
+        link:function(scope,ele,attrs,girlCtrl){
+            girlCtrl.add('gender');
+        }
+    };
+});
+    //总结：
+    //如果你想暴露出来大家用，就用controller，如果自己用，就在link中就行。
+</script>

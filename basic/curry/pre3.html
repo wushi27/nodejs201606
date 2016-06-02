@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+//bind如何实现的？
+var obj = {name:'hello'};
+function fn(){
+    console.log(this);
+}
+//我们发现这是个函数嵌套，那么，如何将其拿出来封装一下呢？
+
+setTimeout(function(){
+    fn.call(obj);
+},1000);
+</script>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html ng-app="myMod">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>指令的实例1</title>
+    <link rel="stylesheet" href="../../../public/lib/bootstrap/dist/css/bootstrap.css"/>
+    <style>
+        .title{
+            width:100px;
+            height: 30px;
+            border:1px solid red;
+        }
+        .content{
+            width:100px;
+            height: 230px;
+            border:1px solid blue;
+        }
+    </style>
+</head>
+<body>
+<openers>
+    <opener title="这是第一个标题">这是第一个内容</opener>
+    <opener title="这是第二个标题">这是第二个内容</opener>
+    <opener title="这是第三个标题">这是第三个内容</opener>
+</openers>
+
+</body>
+</html>
+<script src="../../../public/lib/angular/angular.js"></script>
+<script>
+    /*
+    * require:''寻找指令
+    * 不给：同级的寻找
+    * ^:找同级或上级。
+    *
+    * */
+    var module = angular.module('myMod',[]);
+    //组件指令：开关效果：指令相互调用
+    module.directive('openers',function(){
+        return {
+            restrict:'E',
+            controller:function($scope,$element,$attrs){
+                var openers = [];
+                this.add = function(item){
+                    openers.push(item);
+                };
+                this.open = function(scope){
+                    //循环
+                    openers.forEach(function(current){
+                        if(scope == current){
+                            current.open =  !current.open;
+
+                        }else{
+                            current.open = false;
+                        }
+                    });
+                }
+            }
+        };
+    });
+    module.directive('opener',function(){
+        return {
+            restrict:'E',
+            transclude:true,
+            scope:true,//子指令作用域独立
+            templateUrl:'../template/tem2.html',
+            require:'^openers',
+            link:function(scope,ele,attrs,opensCtrl){
+                scope.title = attrs.title;
+                scope.toggle= function(){
+                    //控制自己和兄弟状态
+                    opensCtrl.open(scope);//委托在父容器执行
+                }
+                opensCtrl.add(scope);
+            }
+        };
+    });
+</script>

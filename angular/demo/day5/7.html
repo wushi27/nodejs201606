@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="myMod">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>过滤器</title>
+    <link rel="stylesheet" href="../../public/lib/bootstrap/dist/css/bootstrap.css"/>
+
+</head>
+<body>
+    <div ng-controller="myCtrl">
+        {{88.88 | currency:"￥"}}
+        <br/>
+        <!--管道模式-->
+        {{99 | number:3 | currency:'$'}}
+    </div>
+</body>
+</html>
+<script src="../../public/lib/angular/angular.js"></script>
+<script>
+/*
+   过滤器：自定义过滤器，预置过滤器
+   过滤器是一种特殊的服务。
+   1.必须使用模块的filter接口注册服务。
+   2.必须提供对象工厂factory方法。
+   3.对象工程必须返回一个过滤器函数，其中第一个为输入变量。
+* */
+    var module = angular.module('myMod',[]);
+    module.filter(function(){
+        return function(input){
+
+        }
+    });
+    //预置过滤器可以用名称+Filter的方式调用。
+    module.controller('myCtrl',function($scope,numberFilter){
+        console.log(numberFilter(99,3));
+    });
+
+</script>

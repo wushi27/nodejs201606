@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myMod">
+<head>
+    <meta charset="UTF-8">
+    <title>MVVM</title>
+</head>
+<!--rootScope-->
+<body>
+
+<div ng-controller="myCtrl1">
+    {{count}}
+    <input type="button" value="add" ng-click="add()"/>
+</div>
+
+
+
+
+<div ng-controller="myCtrl2">
+    {{count}}
+    <input type="button" value="add" ng-click="add()"/>
+</div>
+</body>
+</html>
+<script src="../../public/lib/angular/angular.js"></script>
+<script>
+/*
+* 一个视图一个控制器
+* 控制器有相同逻辑，可以封装service注入共用。
+* */
+//重复代码需要消除
+ angular.module('myMod',[])
+        .controller('myCtrl1',function($scope){
+            $scope.count = 0;
+            $scope.add = function(){
+                $scope.count++;
+            }
+
+        })
+        .controller('myCtrl2',function($scope){
+            $scope.count = 0;
+            $scope.add = function(){
+                $scope.count++;
+            }
+        });
+
+</script>

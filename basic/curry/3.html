@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <button id="btn">click</button>
+</body>
+</html>
+<script>
+    var name = 'this is window';
+    function processThis(obj,fn){
+        return function(){
+            var ary = [].slice.call(arguments,0);//参数列表，相当于fn(e)
+            fn.call(obj,ary);
+        }
+    }
+
+    var obj = {name:'this is obj'};
+    function fn(e){
+        console.log(e);
+        console.log(this.name);
+
+    }
+
+    var oBtn = document.getElementById('btn');
+    oBtn.addEventListener('click',processThis(obj,fn),false);
+
+
+</script>
