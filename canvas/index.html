@@ -21,6 +21,8 @@
 
             <div class="c_t_1"></div>
             <div class="c_t_2"></div>
+            <div class="c_t_3"></div>
+            <div class="c_t_4"></div>
         </div>
 
         <div class="text">
@@ -46,6 +48,27 @@
 </body>
 </html>
 <script>
+    var Timeline = function(){
+        this.order = [];
+        this.add = function(func,timeout){
+            this.order.push({
+                timeout:timeout,
+                func:func
+
+            });
+        };
+        this.start = function(){
+            for(i in this.order){
+                (function(me){
+                    var fn = me.func;
+                    var timeout = me.timeout;
+                    setTimeout(fn,timeout);
+
+                })(this.order[i]);
+            }
+        }
+    };
+    var s = new Timeline();
    $('#clickzongzi').click(function(){
        $(this).removeClass('c_zongzi_box_rock');
        setTimeout(function(){
@@ -83,9 +106,61 @@
            $('.text').addClass('text_in');
 
 
+           addAnti();
+
        },4000);
 
+
+       setInterval(function(){
+           s.start();
+       },2500);
+
    });
+    function clearAnti(){
+        $('.c_zongzirou').attr('class','c_zongzirou c_zongzirou_in');
+        $('.c_t_1').hide();
+        $('.c_t_2').hide();
+        $('.c_t_3').hide();
+        $('.c_t_4').hide();
+    }
+function addAnti(){
+    s.add(function(){
+        //粽子旋转
+        clearAnti();
+        $('.c_zongzirou').addClass('c_zongzirou_view_1');
+        $('.c_t_1').show();
 
+    },500);
+    s.add(function(){
+        //粽子旋转
+        clearAnti();
+        $('.c_zongzirou').addClass('c_zongzirou_view_2');
+        $('.c_t_2').show();
 
+    },1000);
+    s.add(function(){
+        //粽子旋转
+        clearAnti();
+        $('.c_zongzirou').addClass('c_zongzirou_view_3');
+        $('.c_t_3').show();
+    },1500);
+    s.add(function(){
+        //粽子旋转
+        clearAnti();
+        $('.c_zongzirou').addClass('c_zongzirou_view_4');
+        $('.c_t_4').show();
+    },2000);
+    s.add(function(){
+        //粽子旋转
+        clearAnti();
+       // $('.c_zongzirou').addClass('c_zongzirou_view_1');
+
+    },2500);
+//    s.add(function(){
+//        //粽子旋转
+//        clearAnti();
+//
+//    },3000);
+
+}
 </script>
