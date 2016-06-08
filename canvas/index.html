@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>端午节快乐</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <link rel="stylesheet" href="./css/style.css"/>
+    <script src="js/jquery.min.js"></script>
+</head>
+<body>
+    <div class="main">
+        <div class="c_zongzi_box c_zongzi_box_rock" id="clickzongzi">
+            <div class="c_zongzi"></div>
+            <div class="c_shengzi_1"></div>
+
+            <div class="c_zongzirou"></div>
+            <div class="c_zuoye"></div>
+            <div class="c_youye"></div>
+            <div class="c_diye"></div>
+
+            <div class="c_t_1"></div>
+            <div class="c_t_2"></div>
+        </div>
+
+        <div class="text">
+            <div class="caption"></div>
+            <div class="to"><h2>致潘朵拉：</h2></div>
+            <div class="msg">
+
+                    <h3>感谢上苍，让我认识了你。<br/>
+                        希望这只粗糙的电子粽，<br/>能带给你些微的快乐。<br/>
+                        因为认识你，<br/>
+                        我的生活开始变得精彩。<br/>
+                        小琴，
+                        端午节快乐！！
+                    </h3>
+            </div>
+            <div class="from"><h3>小宇</h3></div>
+
+        </div>
+
+
+
+    </div>
+</body>
+</html>
+<script>
+   $('#clickzongzi').click(function(){
+       $(this).removeClass('c_zongzi_box_rock');
+       setTimeout(function(){
+           $('.c_shengzi_1').addClass('c_shengzi_2');
+       },500);
+       setTimeout(function(){
+           $('.c_shengzi_1').addClass('c_shengzi_3');
+       },1000);
+       setTimeout(function(){
+           $('.c_shengzi_1').addClass('c_shengzi_4');
+       },1500);
+       setTimeout(function(){
+           $('.c_zongzi').addClass('c_zongzi_out');
+          // $('.c_zongzirou').addClass('c_zongzirou_in');
+          // $('.c_zongzi').removeClass('c_zongzi');
+           $('.c_youye').addClass('c_youye_in');
+
+       },2000);
+
+       setTimeout(function(){
+           $('.c_zongzi').addClass('c_zongzi_out');
+           //$('.c_zongzirou').addClass('c_zongzirou_in');
+           $('.c_zuoye').addClass('c_zuoye_in');
+
+       },3000);
+       setTimeout(function(){
+           $('.c_zuoye').addClass('c_zuoye_out');
+           $('.c_youye').addClass('c_youye_out');
+           $('.c_diye').addClass('c_diye_in');
+           //$('.c_shengzi_1').addClass('c_shengzi_1');
+
+           $('.c_zongzi').addClass('c_zongzi_out');
+           $('.c_zongzirou').addClass('c_zongzirou_in');
+
+           $('.text').addClass('text_in');
+
+
+       },4000);
+
+   });
+
+
+</script>
