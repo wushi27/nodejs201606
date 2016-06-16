@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app="myMod">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>自定义指令</title>
+    <link rel="stylesheet" href="../../public/lib/bootstrap/dist/css/bootstrap.css"/>
+</head>
+<body ng-controller="myCtrl">
+<person namexx="{{zhangsan}}"></person>
+<person namexx="{{lisi}}"></person>
+
+</body>
+</html>
+<script src="../../public/lib/angular/angular.js"></script>
+<script>
+    /*
+        scope的绑定策略
+        @:把当前属性作为字符串传递，还可以绑定来自外层scope上的值，在属性中插入{{}}即可。
+
+     * */
+    var module = angular.module('myMod',[]);
+    //关联，将controller里面的信息，获取后，通过属性namexx，与指令相接。
+    module.controller('myCtrl',function($scope){
+                $scope.zhangsan='张三';
+                $scope.lisi='李四';
+                $scope.greet = function(name,word){
+                    alert(name+" "+word);
+                }
+            })
+            .directive('person',function(){
+                return {
+                        transclude:true,
+                        scope:{
+                            name:'@namexx'
+                        },//表明：这里有一个独立scope属性，取值从name属性上取。
+                        replace:true,
+                        restrict:'E',
+                        template:'<div>姓名：{{name}}</div>'//这里的scope.name，就是上面的值。
+
+                        };
+    });
+</script>

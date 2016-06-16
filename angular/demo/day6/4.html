@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="myMod">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>ui-router</title>
+
+
+</head>
+<body>
+
+    <a ui-sref="index">index</a><br/>
+    <a ui-sref="user">user</a>
+    <div ng-controller="myCtrl">
+        <button ng-click="gotoUser()">跳到用户页面</button>
+    </div>
+
+    <div ui-view>
+            切换区域
+    </div>
+
+</body>
+</html>
+<script src="../../public/lib/angular/angular.js"></script>
+<script src="../../public/lib/angular-ui-router/release/angular-ui-router.js"></script>
+<script>
+    /*
+        1.ng-route无法嵌套，功能太弱。
+        2.ui-router工作原理类似angular的路由控制器，但它只关心状态
+        在应用程序的整个用户界面和导航中，一个状态对应于一个页面位置。
+        通过定义controller、template和view等属性，来定义指定位置的用户页面和行为。
+        3.激活状态：
+        1）调用$state.go()方法。
+        2）点击包含ui-sref指令的链接。
+        3）#/index这样的url方式。
+     * */
+    //注入依赖
+        var module = angular.module('myMod',['ui.router']);
+        module.controller('myCtrl',function($scope,$state){
+            $scope.gotoUser = function(){
+                $state.go('user');
+            };
+        });
+        module.config(function($stateProvider,$urlRouterProvider){
+            $urlRouterProvider.otherwise('/user');//当不存在的url时，到这里。
+            $stateProvider.state('index',{
+                url:'/index',
+                templateUrl:'index.html'
+            }).state('user',{
+                url:'/user',
+                templateUrl:'user.html'
+            });
+        });
+
+</script>

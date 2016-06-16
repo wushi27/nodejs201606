@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MVVM</title>
+</head>
+<body ng-app="myMod">
+    <cheform></cheform>
+</body>
+</html>
+<script src="../../public/lib/angular/angular.js"></script>
+<script>
+    /*
+     * 组件型指令：封装一个表单,里面带自己的模板。
+     *
+     * 总结：
+     * 标签：组件型指令，自己买的房子，想怎么搞都行
+     * 属性：装饰型指令，租的房子，不能拆了吧。
+     *
+     * */
+    angular.module('myMod',[])
+        //定义一个指令，指令名字，指令定义
+            .directive('cheform',function(){
+                return {
+                    //指明模板，插入到dom里。
+                    template:'<form>用户名：<input  type="text" name="username" /></form>'
+                }
+            });
+</script>

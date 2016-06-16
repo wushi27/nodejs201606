@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="myMod">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>自定义指令</title>
+    <link rel="stylesheet" href="../../public/lib/bootstrap/dist/css/bootstrap.css"/>
+</head>
+<body ng-controller="myCtrl">
+父ctrl: <input type="text" ng-model="zhangsan"/>
+<br/>
+指令：
+<person namexx="{{zhangsan}}" greet="greet(myname,myword)"></person>
+</body>
+</html>
+<script src="../../public/lib/angular/angular.js"></script>
+<script>
+    /*
+     &:传递一个来自父scope中的函数，稍后调用。
+
+     * */
+    var module = angular.module('myMod',[]);
+    //指令影响到父ctrl,而且父ctrl也会影响到指令。
+    module.controller('myCtrl',function($scope){
+        $scope.zhangsan='张三';
+        $scope.lisi='李四';
+        $scope.greet = function(name,word){
+            alert(name+"===="+word);
+        }
+    })
+            .directive('person',function(){
+                return {
+                    transclude:true,
+                    scope:{
+                        name:'@namexx',//独立scope，继承父ctrl的namexx，并将其作为参数传入greet函数。
+                        greet:'&greet'//单向继承父ctrl的方法。
+                    },//表明：这里有一个独立scope属性，取值从name属性上取。
+                    replace:true,
+                    restrict:'E',
+                    template:'<div>姓名：<input type="text" ng-model="name"/><input type="text" ng-model="word"/><div ng-click="greet({myname:name,myword:word})">click me</div></div>'//这里的scope.name，就是上面的值。
+
+                };
+            });
+</script>

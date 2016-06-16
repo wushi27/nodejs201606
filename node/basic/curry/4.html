@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <button id="btn">click</button>
+</body>
+</html>
+<script>
+    //柯理化函数:
+    //使用场景1:处理this关键字。
+//新版本
+function bindFn(fn,context){
+    var args = [].slice.call(arguments,2);//100
+    return function(){
+        var innerArgs = [].slice.call(arguments);//e
+        var finalArgs = args.concat(innerArgs);//100+e
+        return fn.apply(context,finalArgs);
+    }
+
+}
+//旧版本
+    function processThis(obj,fn){
+        return function(){
+            var ary = [].slice.call(arguments,0);//参数列表，相当于fn(e)
+            fn.call(obj,ary);
+        }
+    }
+function fn(e,num){
+    console.log(e);
+    console.log(num);
+}
+
+var btn = document.querySelector('#btn');
+    btn.addEventListener('click',bindFn(fn,null,100),false);
+
+</script>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>自定义指令</title>
+    <link rel="stylesheet" href="../../public/lib/bootstrap/dist/css/bootstrap.css"/>
+</head>
+<body ng-app="myMod">
+<hello></hello>
+<hello></hello>
+<hello></hello>
+<hello></hello>
+</body>
+</html>
+<script src="../../public/lib/angular/angular.js"></script>
+<script>
+    /*
+        scope的绑定策略
+        @:把当前属性作为字符串传递，还可以绑定来自外层scope上的值，在属性中插入{{}}即可。
+        =：与父scope中的属性进行双向绑定。
+        &:传递一个来自父scope中的函数，稍后调用。
+     * */
+    var module = angular.module('myMod',[]);
+    //这里注意，如果restrict为C模式，要注意指令名称不能写alert，会跟template下面的class的alert冲突导致死循环。
+    //独立的scope：
+    module.directive('hello',function(){
+        return {
+            transclude:true,
+            scope:true,//不填写就默认false，就继承父scope，也就是rootscope
+            replace:true,
+            restrict:'E',
+            template:'<input ng-model="name">'
+
+
+        };
+    });
+</script>

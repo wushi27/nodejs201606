@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    /*
+    从服务器拿到数据，更新state。
+
+    state:
+    到目前为止，每一个组件都根据自己的 props 渲染了自己一次。
+    props 是不可变的：它们从父组件传递过来，“属于”父组件。
+    为了实现交互，我们给组件引入了可变的 state 。this.state 是组件私有的，
+    可以通过调用 this.setState() 来改变它。
+    当 state 更新之后，组件就会重新渲染自己。
+
+     render() 方法依赖于 this.props 和 this.state ，
+     框架会确保渲染出来的 UI 界面总是与输入（ this.props 和 this.state ）保持一致。
+
+     当服务器拿到评论数据的时候，
+     我们将会用已知的评论数据改变评论。
+     让我们给 CommentBox 组件添加一个评论数组作为它的 state .
+     getInitialState() 在组件的生命周期中仅执行一次，用于设置组件的初始化 state 。
+    *
+    * */
+</script>

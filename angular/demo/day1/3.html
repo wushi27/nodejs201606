@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MVVM</title>
+</head>
+<body ng-app="myMod">
+    <div red>
+        你好，我是一个指令，我会变红哦。
+    </div>
+</body>
+</html>
+<script src="../../public/lib/angular/angular.js"></script>
+<script>
+    //controller只是作用域，不要写业务逻辑
+    /*
+     *业务逻辑写在指令里面。
+     * 指令是关联的html结构进入编译截断时应执行的操作。
+     * 当浏览器启动、开始解析html时，dom元素上的指令属性就会跟其他属性一样被解析，
+     * 也就是说，一个angular应用启动步骤为：
+     * 1.angular编译器会遍历dom来解析html，寻找这些指令属性。
+     * 2.在一个dom上找到一个或多个这样的指令属性。
+     * 3.收集起来后，排序，然后按照优先级被执行。
+     * 分类：
+     * 1.组件型指令：为了将复杂视图分离，实现高内聚低耦合，比如登录框。
+     * 2.装饰型指令：为了dom增加行为或使之具备某些能力，比如可拖拽、添加某些样式等。
+     *
+     * */
+    angular.module('myMod',[])
+            //定义一个指令，指令名字，指令定义
+            .directive('red',function(){
+                return {
+                    //这个形参不做要求，不用非要带$。
+                    link:function(scope,ele){
+                        ele.css('color','red');
+                    }
+                }
+            });
+</script>

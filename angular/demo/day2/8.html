@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body ng-app="myMod">
+<div ng-controller="parentCtrl">
+    parent:{{count}}
+    <div ng-controller="childCtrl">
+        <!--$emit都是scope下的属性方法-->
+        <input type="button" ng-click="$emit('add')" value="向上传播"/>
+        <input type="button" ng-click="$broadcast('add')" value="向下传播"/>
+        child:{{count}}
+        <div ng-controller="grandCtrl">
+            grand:{{count}}
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
+<script src="../../public/lib/angular/angular.js"></script>
+<script>
+    //scope可以传播事件，类似dom的冒泡捕获。
+
+    var module = angular.module('myMod',[]);
+    module.controller('parentCtrl',function($scope){
+            $scope.count = 0;
+            $scope.$on('add',function(event){
+                $scope.count++;
+            });
+
+    });
+    module.controller('childCtrl',function($scope){
+            $scope.count = 0;
+            $scope.$on('add',function(event){
+                $scope.count++;
+            });
+
+    });
+    module.controller('grandCtrl',function($scope){
+        $scope.count = 0;
+        $scope.$on('add',function(event){
+            $scope.count++;
+        });
+    });
+</script>

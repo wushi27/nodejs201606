@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myMod">
+<head>
+    <meta charset="UTF-8">
+    <title>MVVM</title>
+</head>
+<!--rootScope-->
+<body ng-controller="myCtrl">
+{{name | uppercase}}
+<!--内置过滤器-->
+</body>
+</html>
+<script src="../../public/lib/angular/angular.js"></script>
+<script>
+//过滤器
+    angular.module('myMod',[])
+            .controller('myCtrl',function($scope){
+                $scope.name = 'haha';
+            });
+</script>

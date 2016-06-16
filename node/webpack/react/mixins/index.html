@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div id="test"></div>
+</body>
+</html>
+<script src="./dest/bundle.js"></script>
+<script>
+    /*
+    * 组件是 React 里复用代码最佳方式，
+    * 但是有时一些复杂的组件间也需要共用一些功能。
+    * 有时会被称为 跨切面关注点。React 使用 mixins 来解决这类问题。
+
+     一个通用的场景是：
+     一个组件需要定期更新。
+     用 setInterval() 做很容易，
+     但当不需要它的时候取消定时器来节省内存是非常重要的。
+     React 提供 生命周期方法 来告知组件创建或销毁的时间。
+     下面来做一个简单的 mixin，使用 setInterval() 并保证在组件销毁时清理定时器。
+    * */
+/**componentWillMount
+ 当组件要被挂载时这个函数被调用。这意味着我们可以在此运行组件功能必须的代码。为由于 render 在组件生命周期里被多次调用，我们一般会把只需要执行一次的代码放在这里，比如 XHR 请求
+ *componentDidMount
+ 一旦你的组件已经运行了 render 函数，并实际将组件渲染到了 DOM 中，componentDidMount 就会被调用。我们可以在这儿做任何需要做的 DOM 操作，已经任何需要依赖于组件已经实际存在于 DOM 之后才能做的事情, 例如渲染一个图表。你可以通过调用 this.getDOMNode 在内部访问到 DOM 节点。
+ *componentWillUnmount
+ 如果你准备吧组件从 DOM 移除时，这个函数将会被调用。这让我们可以在组件背后进行清理，比如移除任何我们已经绑定的事件监听器。如果我们没有在自身背后做清理，而当其中一个事件被触发时，就会尝试去计算一个没有载入的组件，React 就会抛出一个错误。
+ * */
+
+ </script>

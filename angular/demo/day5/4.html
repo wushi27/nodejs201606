@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="myMod">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>修饰器</title>
+    <link rel="stylesheet" href="../../public/lib/bootstrap/dist/css/bootstrap.css"/>
+
+</head>
+<body>
+    <div ng-controller="myCtrl">
+        <button ng-click="log()">click</button>
+    </div>
+</body>
+</html>
+<script src="../../public/lib/angular/angular.js"></script>
+<script>
+/*
+装饰者模式decorator，
+作用：
+我们希望扩展一些angular自身的功能，
+又不能修改源码，此时可以用decorator。
+装饰器也是个双刃剑，会篡改原服务的方法，慎用。
+*
+* */
+    var module = angular.module('myMod',[]);
+    module.config(function($provide){
+        $provide.decorator('$log',function($delegate){
+            var errorLog = $delegate.error;//保存原有的方法.
+            //增强方法
+            $delegate['error'] = function(){
+                var args = [].slice.call(arguments);
+                args.unshift(new Date());
+                errorLog.apply(null,args);
+            }
+            return  $delegate;
+        });
+    });
+    module.controller('myCtrl',function($scope,$log){
+        $scope.log = function(){
+//现在，我想在日志输出记录前，加上时间，那我们现在看到，$Log.error()这个方法是不带这样的功能的，
+// 那怎么做才能增强$log.error()的功能呢？注意，这个$log可是angular自己的模块。
+            $log.error('hello');
+        }
+    });
+
+</script>

@@ -1,0 +1,65 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>奖品列表</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no" />
+</head>
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/size.js"></script>
+<script src="js/template.js"></script>
+
+<body class="bgcol">
+
+</body>
+
+</html>
+
+<script id="prizelist_tpl" type="text/html">
+     {{each rContent as value}}
+<div class="w100">
+    <div class="jx-list bg333342">
+        {{if value.prizeCode == 'JP000001'}}
+            <div class="list-img"></div>
+        {{else if value.prizeCode == 'JP000002'}}
+            <div class="list-img2"></div>
+        {{else}}
+            <div class="list-img3"></div>
+        {{/if}}
+        <div class="list-right">
+            <h3 class="colf tl  h3-pb2" >{{value.name}}</h3>
+            <p class="colc tl fz60  p-pb2" >恭喜您在嘀嘀嘀活动中抽得了{{value.name}},快去领取吧......</p>
+            <p class="colf tl fz60 ">有效期：{{value.startTime | dateSubstr}}   -   {{value.endTime | dateSubstr}}</p>
+        </div>
+        <a  class="yshixiao colbcbce7">{{value.statusText}}</a>
+    </div>
+</div>
+    {{/each}}
+</script>
+<script src="js/prizelist.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

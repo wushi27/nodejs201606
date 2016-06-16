@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    var form = new FormData();
+    form.append('username','xiaoming');
+    form.append('username','xiaoming111');
+    form.append('email','aaa@qq.com');
+    console.log(form);
+    //遍历
+    form.forEach(function(value,key){
+       // console.log(value);
+        //console.log(key);
+    });
+
+    console.log(form.get('email'));
+    console.log(form.getAll('username'));
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = callback;
+    xhr.open('POST','test2.php');
+    xhr.send(form);
+    function callback(){
+        console.log(xhr.readyState);
+        if(xhr.readyState == 4){
+            console.log(xhr.status);
+            if(xhr.status ==200){
+
+                console.log(xhr.responseText);//http状态码对应的文本
+            }
+
+        }
+    }
+</script>
